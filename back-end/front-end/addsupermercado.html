@@ -7,19 +7,19 @@
 
     <h1>Entre os dados</h1>
 
-    <br> name            <input type="text">
-    <br> email           <input type="text">
-    <br> password        <input type="password">
-    <br> description     <input type="text">
-    <br> operatingHours  <input type="text">
-    <br> valor entrega   <input type="text">
-    <br> Endereço        <input type="text">
-    <br> rua             <input type="text">
-    <br> numero          <input type="text">
-    <br> bairro          <input type="text">
-    <br> CEP             <input type="text">
-    <br> cidade          <input type="text">
-    <br> estado          <input type="text">
+    <br> name                   <input type="text" id="nome">
+    <br> email                  <input type="text" id="email">
+    <br> password               <input type="text" id="password">
+    <br> descrição              <input type="text" id="descricao">
+    <br> Horario Funcionamento  <input type="text" id="horario">
+    <br> valor entrega          <input type="text" id=valorEntrega>
+    <br> Endereço               
+    <br> rua                    <input type="text" id="rua">
+    <br> numero                 <input type="text" id="numero">
+    <br> bairro                 <input type="text" id="bairro">
+    <br> CEP                    <input type="text" id="cep">
+    <br> cidade                 <input type="text" id="cidade">
+    <br> estado                 <input type="text" id="estado" >
 
     <br> <button onclick="voltaTelaLogin()">Completar cadastro</button>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,8 +28,42 @@
     
     <script>
         function voltaTelaLogin(){
-            alert("Supermercado cadastrado com sucesso");
+            cadastra();
             window.location.href = "index.html";
+        }
+
+        function cadastra(){
+            const Http = new XMLHttpRequest();
+            const url='http://localhost:3000/supermarket';
+            Http.open("POST", url);
+            Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
+            //Http.responseType = 'json';
+            const body = JSON.stringify({
+                "name": document.getElementById("nome").value,
+                "address":{ 
+                    "state": document.getElementById("estado").value,
+                    "city":  document.getElementById("cidade").value,
+                    "zipcode": document.getElementById("cep").value,
+                    "number" : document.getElementById("numero").value ,
+                    "neighborhood": document.getElementById("bairro").value ,
+                    "street": document.getElementById("rua").value
+                },
+                "email": document.getElementById("email").value ,
+                "password":document.getElementById("password").value,
+                "description":document.getElementById("descricao").value,
+                "operatingHours":document.getElementById("horario").value,
+                "deliveryCosts":{
+                    "neighborhood":document.getElementById("bairro").value,
+                    "value":document.getElementById("valorEntrega").value
+                }
+                });
+
+            Http.send(body);
+
+            Http.onreadystatechange=(e)=>{
+                console.log(Http.responseText)
+            };
+            alert("Supermercado cadastrado com sucesso");
         }
     </script>
 </head>
