@@ -5,19 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cadastro Cliente</title>
     <h1>Entre os dados</h1>
-    <br>Nome: <input type="text">
-
-    <br> sobrenome       <input type="text">
-    <br> data nascimento <input type="text">
-    <br> Endereço        <input type="text">
-    <br> rua             <input type="text">
-    <br> numero          <input type="text">
-    <br> bairro          <input type="text">
-    <br> CEP             <input type="text">
-    <br> cidade          <input type="text">
-    <br> estado          <input type="text">
-    <br> email           <input type="text">
-    <br> password        <input type="text">
+    
+    <br>Nome: <input type="text" id="nome">
+    <br> sobrenome       <input type="text" id="sobrenome">
+    <br> data nascimento <input type="text" id="birthdate">
+    <br> Endereço:
+    <br> rua             <input type="text" id="rua">
+    <br> numero          <input type="text" id="numero">
+    <br> bairro          <input type="text" id="bairro">
+    <br> CEP             <input type="text" id="cep">
+    <br> cidade          <input type="text" id="cidade">
+    <br> estado          <input type="text" id="estado" >
+    <br> email           <input type="text" id="email">
+    <br> password        <input type="text" id="password">
         
     <br>
     <button onclick="voltaTelaLogin()">Cadastrar</button>
@@ -30,14 +30,32 @@
     <script>
         function voltaTelaLogin(){
             cadastra();
-            window.location.href = "index.html";
+            //window.location.href = "index.html";
         }
+        
         function cadastra(){
             const Http = new XMLHttpRequest();
-            const url='https://localhost:3000/supermarket';
-            Http.open("GET", url);
+            const url='http://localhost:3000/client';
+            Http.open("POST", url);
+            Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
             //Http.responseType = 'json';
-            Http.send();
+            const body = JSON.stringify({
+                            "name": document.getElementById("nome").value,
+                            "lastName": document.getElementById("sobrenome").value,
+                            "birthDate": document.getElementById("birthdate").value,
+                            "address":{ 
+                                "state": document.getElementById("estado").value,
+                                "city":  document.getElementById("cidade").value,
+                                "zipcode": document.getElementById("cep").value,
+                                "number" : document.getElementById("numero").value ,
+                                "neighborhood": document.getElementById("bairro").value ,
+                                "street": document.getElementById("rua").value
+                            },
+                            "email": document.getElementById("email").value ,
+                            "password":document.getElementById("password").value
+                            });
+
+            Http.send(body);
 
             Http.onreadystatechange=(e)=>{
                 console.log(Http.responseText)
