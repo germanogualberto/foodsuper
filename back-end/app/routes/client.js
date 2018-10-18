@@ -9,6 +9,7 @@ module.exports = (app) => {
   ];
 
   app.route('/client').post(controller.add);
+  app.route('/clients').get(controller.list);
 
   app
     .route('/client/:id')

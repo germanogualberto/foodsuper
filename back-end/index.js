@@ -33,3 +33,8 @@ app.get('/main.html', (req, res) => {
 app.get('/updateclient.html', (req, res) => {
   res.sendFile('./front-end/updateclient.html', { root: __dirname });
 });
+
+app.get('/clients', (req, res) => {
+  res.sendFile('./front-end/updateclient.html', { root: __dirname });
+});
+
