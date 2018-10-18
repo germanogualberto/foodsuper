@@ -26,11 +26,23 @@
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    
     <script>
         function voltaTelaLogin(){
-            alert("Cliente cadastrado com sucesso");
+            cadastra();
             window.location.href = "index.html";
+        }
+        function cadastra(){
+            const Http = new XMLHttpRequest();
+            const url='https://localhost:3000/supermarket';
+            Http.open("GET", url);
+            //Http.responseType = 'json';
+            Http.send();
+
+            Http.onreadystatechange=(e)=>{
+                console.log(Http.responseText)
+            };
+            alert("Cliente cadastrado com sucesso");
         }
     </script>
 </head>
