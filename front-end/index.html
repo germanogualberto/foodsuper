@@ -6,11 +6,25 @@
     <title>foodsuper</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <h1>Bem vindo ao foodsuper</h1>
-    <button>Fazer login</button>
-    <button>cadastrar-se</button>
-    <button>Quero me tornar parceiro</button>
+    <button onclick="fazlogin()">Fazer login</button>
+    <button onclick="cadastrarCliente()">cadastrar-se</button>
+    <button onclick="cadastrarMercado()">Quero me tornar parceiro</button>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    
+    
+    <script>
+    function fazlogin(){
+        window.location.href = "login.html";
+    }
+
+    function cadastrarCliente(){
+        window.location.href = "addclient.html";
+    }
+
+    function cadastrarMercado(){
+        window.location.href = "addsupermercado.html";
+    }
+    </script>
 </head>
 <body>
     

@@ -20,14 +20,19 @@
     <br> password        <input type="text">
         
     <br>
-    <button>Cadastrar</button>
+    <button onclick="voltaTelaLogin()">Cadastrar</button>
 
 
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <script>
+        function voltaTelaLogin(){
+            alert("Cliente cadastrado com sucesso");
+            window.location.href = "index.html";
+        }
+    </script>
 </head>
 <body>
     
