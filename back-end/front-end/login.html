@@ -4,43 +4,57 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Foodsuper login</title>
-    <h1>Entre seus dados</h1>
-    Email do usuario
-    <input type="text" value="user@email.com" id="email">
-    <br>Senha 
-    <input type="password" value="senha" id="password">
-    <br><br>
-    <button onclick="fazLogin()">Fazer login</button>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     
-    <script >
-        function fazLogin(){
-            login();
-            window.location.href = "main.html";
-        }
-
-        function login(){
-            const Http = new XMLHttpRequest();
-            const url='http://localhost:3000/login';
-            Http.open("POST", url);
-            Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
-            //Http.responseType = 'json';
-            const body = JSON.stringify({
-                "email": document.getElementById("email").value ,
-                "password":document.getElementById("password").value,
-                });
-
-            Http.send(body);
-
-            Http.onreadystatechange=(e)=>{
-                console.log(Http.responseText)
-            };
-            //alert("Supermercado cadastrado com sucesso");
-        }
-    </script>
 </head>
 <body>
+        <h1>Entre seus dados</h1>
+        Email do usuario
+        <input type="text" value="user@email.com" id="email">
+        <br>Senha 
+        <input type="password" value="senha" id="password">
+        <br><br>
+        <button onclick="fazLogin()">Fazer login</button>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+        
+        <script >
+            function fazLogin(){
+                var status = login();
+                if (status==true){
+                    alert("Login com sucesso")
+                    window.location.href = "mainUsuario.html";
+                }else{
+                    console.log("Erro no login");
+                }
+            }
     
+            function login(){
+                const Http = new XMLHttpRequest();
+                const url='http://localhost:3000/login';
+                Http.open("POST", url);
+                Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
+                //Http.responseType = 'json';
+                const body = JSON.stringify({
+                    "email": document.getElementById("email").value ,
+                    "password":document.getElementById("password").value,
+                    });
+    
+                Http.send(body);
+    
+                Http.onreadystatechange=(e)=>{  
+                    console.log(Http.responseText);
+                        // Request finished. Do processing here.
+                };
+                if (Http.status == 0){
+                    return true;
+                }
+                else{
+                    //console.log(Http.status);
+                    return false;
+                }
+                //return false;
+                //alert("Supermercado cadastrado com sucesso");
+            }
+        </script>
 </body>
 </html>

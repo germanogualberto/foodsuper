@@ -4,67 +4,75 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cadastro Cliente</title>
-    <h1>Entre os dados</h1>
     
-    <br>Nome: <input type="text" id="nome">
-    <br> sobrenome       <input type="text" id="sobrenome">
-    <br> data nascimento <input type="text" id="birthdate">
-    <br> Endereço:
-    <br> rua             <input type="text" id="rua">
-    <br> numero          <input type="text" id="numero">
-    <br> bairro          <input type="text" id="bairro">
-    <br> CEP             <input type="text" id="cep">
-    <br> cidade          <input type="text" id="cidade">
-    <br> estado          <input type="text" id="estado" >
-    <br> email           <input type="text" id="email">
-    <br> password        <input type="text" id="password">
-        
-    <br>
-    <button onclick="voltaTelaLogin()">Cadastrar</button>
-
-
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <script>
-        function voltaTelaLogin(){
-            cadastra();
-            window.location.href = "index.html";
-        }
-        
-        function cadastra(){
-            const Http = new XMLHttpRequest();
-            const url='http://localhost:3000/client';
-            Http.open("POST", url);
-            Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
-            //Http.responseType = 'json';
-            const body = JSON.stringify({
-                            "name": document.getElementById("nome").value,
-                            "lastName": document.getElementById("sobrenome").value,
-                            "birthDate": document.getElementById("birthdate").value,
-                            "address":{ 
-                                "state": document.getElementById("estado").value,
-                                "city":  document.getElementById("cidade").value,
-                                "zipcode": document.getElementById("cep").value,
-                                "number" : document.getElementById("numero").value ,
-                                "neighborhood": document.getElementById("bairro").value ,
-                                "street": document.getElementById("rua").value
-                            },
-                            "email": document.getElementById("email").value ,
-                            "password":document.getElementById("password").value
-                            });
-
-            Http.send(body);
-
-            Http.onreadystatechange=(e)=>{
-                console.log(Http.responseText)
-            };
-            alert("Cliente cadastrado com sucesso");
-        }
-    </script>
 </head>
 <body>
+
+        <h1>Entre os dados</h1>
     
+        <br>Nome: <input type="text" id="nome">
+        <br> sobrenome       <input type="text" id="sobrenome">
+        <br> data nascimento <input type="text" id="birthdate">
+        <br> Endereço:
+        <br> rua             <input type="text" id="rua">
+        <br> numero          <input type="text" id="numero">
+        <br> bairro          <input type="text" id="bairro">
+        <br> CEP             <input type="text" id="cep">
+        <br> cidade          <input type="text" id="cidade">
+        <br> estado          <input type="text" id="estado" >
+        <br> email           <input type="text" id="email">
+        <br> password        <input type="text" id="password">
+            
+        <br>
+        <button onclick="voltaTelaLogin()">Cadastrar</button>
+    
+    
+    
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script>
+            function voltaTelaLogin(){
+                if(cadastra()){
+                    window.location.href = "index.html";  
+                }
+                console.log("Erro no cadastro do cliente")
+            }
+            
+            function cadastra(){
+                const Http = new XMLHttpRequest();
+                const url='http://localhost:3000/client';
+                Http.open("POST", url);
+                Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
+                //Http.responseType = 'json';
+                const body = JSON.stringify({
+                                "name": document.getElementById("nome").value,
+                                "lastName": document.getElementById("sobrenome").value,
+                                "birthDate": document.getElementById("birthdate").value,
+                                "address":{ 
+                                    "state": document.getElementById("estado").value,
+                                    "city":  document.getElementById("cidade").value,
+                                    "zipcode": document.getElementById("cep").value,
+                                    "number" : document.getElementById("numero").value ,
+                                    "neighborhood": document.getElementById("bairro").value ,
+                                    "street": document.getElementById("rua").value
+                                },
+                                "email": document.getElementById("email").value ,
+                                "password":document.getElementById("password").value
+                                });
+    
+                Http.send(body);
+    
+                Http.onreadystatechange=(e)=>{
+                    console.log(Http.responseText);
+                    if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                     // Request finished. Do processing here.
+                     return true;
+                    }
+                };
+                //alert("Cliente cadastrado com sucesso");
+                return false;
+            }
+        </script>
 </body>
 </html>

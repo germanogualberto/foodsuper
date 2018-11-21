@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tela principal</title>
+
+    <h1>Tela Usuario</h1>
+    
+</head>
+<body>
+        <button onclick="atualizardados()">Atualizar dados</button>
+        <button onclick="getSupermercados()">Listar Supermercados Disponiveis</button>
+        <button onclick="sair()">sair</button>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <script>
+    
+            function atualizardados(){
+                window.location.href = "updateclient.html";
+            }
+            function sair(){
+                alert("Logout com sucesso")
+                window.location.href = "index.html";
+            }
+            function getSupermercados(){
+                //alert("Logout com sucesso")
+                window.location.href = "supermercados.html";
+            }
+        </script>
+</body>
+</html>

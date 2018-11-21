@@ -27,8 +27,8 @@ app.get('/addsupermercado.html', (req, res) => {
 app.get('/login.html', (req, res) => {
   res.sendFile('./front-end/login.html', { root: __dirname });
 });
-app.get('/main.html', (req, res) => {
-  res.sendFile('./front-end/main.html', { root: __dirname });
+app.get('/mainUsuario.html', (req, res) => {
+  res.sendFile('./front-end/mainUsuario.html', { root: __dirname });
 });
 app.get('/updateclient.html', (req, res) => {
   res.sendFile('./front-end/updateclient.html', { root: __dirname });
@@ -36,5 +36,8 @@ app.get('/updateclient.html', (req, res) => {
 
 app.get('/clients', (req, res) => {
   res.sendFile('./front-end/updateclient.html', { root: __dirname });
+});
+app.get('/supermercados', (req, res) => {
+  res.sendFile('./front-end/supermercados.html', { root: __dirname });
 });
 
