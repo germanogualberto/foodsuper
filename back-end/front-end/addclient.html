@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Cadastro Cliente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
 </head>
 <body>
@@ -24,19 +25,24 @@
         <br> password        <input type="text" id="password">
             
         <br>
-        <button onclick="voltaTelaLogin()">Cadastrar</button>
+        <button onclick="cadastrar()">Cadastrar</button>
+        <button onclick="voltaTelaPrincipal()">voltar</button>    
     
     
     
-    
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         
+    
         <script>
-            function voltaTelaLogin(){
+
+            function voltaTelaPrincipal(){
+                window.location.href = "index.html";  
+            }
+
+            function cadastrar(){
                 if(cadastra()){
-                    window.location.href = "index.html";  
+                    voltaTelaPrincipal();
                 }
-                console.log("Erro no cadastro do cliente")
+                alert("Erro no cadastro do cliente")
             }
             
             function cadastra(){
