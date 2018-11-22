@@ -29,8 +29,8 @@ module.exports = (app) => {
    * @return {Object} product
    */
   controller.get = (req, res) => {
-    const { _id } = req.params;
-    Product.findOne({ _id })
+    const { idSupermercado } = req.params;
+    Product.find({ idSupermercado })
       .lean(true)
       .exec((error, prod) => {
         if (error) {
@@ -113,9 +113,9 @@ module.exports = (app) => {
    * @param {*} res
    */
   controller.delete = (req, res) => {
-    const { _id } = req.params;
+    const { idSupermercado } = req.params;
 
-    Product.findByIdAndDelete(_id).exec((error) => {
+    Product.findByIdAndDelete({ idSupermercado }).exec((error) => {
       if (error) {
         console.log(`error: ${error}`);
         return res.status(500).json(error);

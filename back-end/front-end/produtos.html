@@ -1,32 +1,117 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Produtos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    
+
+    <script>
+        function carregaProdutos(){
+            atualizaProdutos();
+        }
+    </script>
 </head>
-<body>
+
+<body onload="carregaProdutos()">
     <h1>Produtos</h1>
     <h2>Cadastrar novo Produto:</h2>
-    Nome<input type="text"> <br>
-    Preço<input type="text"> <br>
+    Nome<input type="text" id="nome"> <br>
+    Preço<input type="text" id="preco"> <br>
     <button onclick="cadastrarProduto()">Cadastrar</button>
     <br>
 
     <h2>Produtos Cadastrados</h2>
-    Produto1 <button >Editar</button><button>Remover</button><br>
-    Produto2 <br>
-    Produto3 <br>
-    
+    <div id="produtos">
+        
+        
+    </div>
+
+
     <button onclick="voltarTelaPrincipal()">Voltar</button>
     <script>
-    function voltarTelaPrincipal() {
-        window.location.href = "mainSupermercado.html";
-    }
+        function voltarTelaPrincipal() {
+            window.location.href = "mainSupermercado.html";
+        }
+
+        function cadastrarProduto() {
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/product';
+            Http.open("POST", url,false);
+            Http.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            //Http.responseType = 'json';
+            const body = JSON.stringify({
+                "name": document.getElementById("nome").value,
+                "price": document.getElementById("preco").value,
+                "idSupermercado": localStorage.getItem('_id')
+            });
+
+            Http.send(body);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
+
+            console.log(body);
+            console.log(Http.status);
+            if(Http.status==200){
+                //alert(" Produto cadastrado com sucesso");
+                atualizaProdutos();
+            }
+            //alert("Supermercado cadastrado com sucesso");
+            //voltaTelaLogin();
+        }
+
+        function atualizaProdutos(){
+            var dados = getProdutos();
+            console.log(dados);
+
+            var element = document.getElementById("produtos");
+            element.innerHTML = "";
+            for( i in dados){
+                console.log(dados[i]);
+                var para = document.createElement("a");
+                var br = document.createElement("br");
+                var node = document.createTextNode(dados[i].name);
+
+                //para.href = "prateleira.html";
+                para.appendChild(node);
+                para.appendChild(br);
+
+                
+                element.appendChild(para);
+                
+            }
+        }
+
+        function getProdutos(){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/product/' + localStorage.getItem('_id');
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+
+            console.log('aqui1');
+            console.log(localStorage.getItem('_id'));
+            console.log(localStorage.getItem('token'));
+            console.log(Http.status);
+            console.log(obj);
+            console.log('aqui2');
+            return obj;
+        }
+    
     </script>
 
 </body>
+
 </html>
