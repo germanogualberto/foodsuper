@@ -33,6 +33,9 @@ app.get('/mainUsuario.html', (req, res) => {
 app.get('/updateclient.html', (req, res) => {
   res.sendFile('./front-end/updateclient.html', { root: __dirname });
 });
+app.get('/updatesupermercado.html', (req, res) => {
+  res.sendFile('./front-end/updatesupermercado.html', { root: __dirname });
+});
 
 app.get('/clients', (req, res) => {
   res.sendFile('./front-end/updateclient.html', { root: __dirname });
@@ -43,8 +46,11 @@ app.get('/supermercados.html', (req, res) => {
 app.get('/prateleira.html', (req, res) => {
   res.sendFile('./front-end/prateleira.html', { root: __dirname });
 });
-app.get('/pedidos.html', (req, res) => {
-  res.sendFile('./front-end/pedidos.html', { root: __dirname });
+app.get('/pedidoUsuario.html', (req, res) => {
+  res.sendFile('./front-end/pedidoUsuario.html', { root: __dirname });
+});
+app.get('/pedidoSupermercado.html', (req, res) => {
+  res.sendFile('./front-end/pedidoSupermercado.html', { root: __dirname });
 });
 app.get('/mainSupermercado.html', (req, res) => {
   res.sendFile('./front-end/mainSupermercado.html', { root: __dirname });
