@@ -1,42 +1,122 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
 
     <title>Atualiza Cadastro Cliente</title>
-    
+
+    <h1>Entre os dados</h1>
+
+    <script>
+        function carregaDados() {
+            //alert("agora sim");
+            var dados = getClient();
+            //document.getElementById("nome").value = dados.nome;
+            document.getElementById("nome").value = dados.name;
+            document.getElementById("sobrenome").value = dados.lastName;
+            document.getElementById("birthdate").value = dados.birthDate;
+            document.getElementById("estado").value = dados.address.state;
+            document.getElementById("cidade").value = dados.address.city;
+            document.getElementById("cep").value = dados.address.zipcode;
+            document.getElementById("numero").value = dados.address.number;
+            document.getElementById("bairro").value = dados.address.neighborhood;
+            document.getElementById("rua").value = dados.address.street;
+            document.getElementById("email").value = dados.email;
+            //document.getElementById("password").value = dados.password;
+
+        }
+    </script>
+
 </head>
-<body>
-        <h1>Entre os dados</h1>
-        <br>Nome: <input type="text">
-    
-        <br> sobrenome       <input type="text">
-        <br> data nascimento <input type="text">
-        <br> Endereço        <input type="text">
-        <br> rua             <input type="text">
-        <br> numero          <input type="text">
-        <br> bairro          <input type="text">
-        <br> CEP             <input type="text">
-        <br> cidade          <input type="text">
-        <br> estado          <input type="text">
-        <br> email           <input type="text">
-        <br> password        <input type="text">
-            
-        <br>
-        <button onclick="voltaTelaPrincipal()">Atualizar</button>
-        <button onclick="voltarTelaPrincipal()">Voltar</button>
-    
-    
-    
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script>
-            function voltaTelaPrincipal(){
-                alert("Dados atualizados com sucesso")
-                window.location.href = "mainUsuario.html";
-    
+
+<body onpageshow="carregaDados()">
+
+
+    <br> Nome: <input type="text" id="nome" value="">
+    <br> sobrenome <input type="text" id="sobrenome" value="">
+    <br> data nascimento <input type="text" id="birthdate" value="">
+    <br> Endereço:
+    <br> rua <input type="text" id="rua" value="">
+    <br> numero <input type="text" id="numero" value="">
+    <br> bairro <input type="text" id="bairro" value="">
+    <br> CEP <input type="text" id="cep" value="">
+    <br> cidade <input type="text" id="cidade" value="">
+    <br> estado <input type="text" id="estado" value="">
+    <br> email <input type="text" id="email" value="">
+    <br> password <input type="password" id="password" value="">
+    <br>
+    <button onclick="update()">Atualizar</button>
+    <button onclick="voltaTelaPrincipal()">Voltar</button>
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        function voltaTelaPrincipal() {
+            window.location.href = "mainUsuario.html";
+        }
+
+        function getClient() {
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/client/' + localStorage.getItem('_id');
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
+        }
+
+        function update() {
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/client/'+ localStorage.getItem('_id');
+            Http.open("PUT", url,false);
+            Http.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            //Http.responseType = 'json';
+            const body = JSON.stringify({
+                "name": document.getElementById("nome").value,
+                "lastName": document.getElementById("sobrenome").value,
+                "birthDate": document.getElementById("birthdate").value,
+                "address": {
+                    "state": document.getElementById("estado").value,
+                    "city": document.getElementById("cidade").value,
+                    "zipcode": document.getElementById("cep").value,
+                    "number": document.getElementById("numero").value,
+                    "neighborhood": document.getElementById("bairro").value,
+                    "street": document.getElementById("rua").value
+                },
+                "email": document.getElementById("email").value,
+                "password": document.getElementById("password").value
+            });
+
+            Http.send(body);
+
+            if (Http.status==200){
+                console.log("sucesso ao atualizar");
+                console.log(Http.status);
+                voltaTelaPrincipal();
+
             }
-        </script>
+            else{
+                console.log("ocorreu um erro ao atualizar");
+                console.log(Http.status);
+            }
+            //alert("Cliente cadastrado com sucesso");
+            //return false;
+        }
+    </script>
 </body>
+
 </html>

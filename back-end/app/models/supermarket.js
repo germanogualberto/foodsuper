@@ -5,7 +5,7 @@ const SupermarketSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  deliveryCosts: [
+  deliveryCosts:
     {
       neighborhood: {
         type: String,
@@ -16,8 +16,7 @@ const SupermarketSchema = mongoose.Schema({
         required: true,
         min: 0
       }
-    }
-  ],
+    },
   operatingHours: [{ type: String }]
   // formas de pagamento?
   // tipo de comida

@@ -11,7 +11,7 @@
         Email do usuario
         <input type="text" value="user@email.com" id="email">
         cliente=user@email.com
-        mercado=merc@mail.com
+        mercado=merc1@mail.com
         <br>Senha 
         <input type="password" value="senha" id="password">
         <br><br>
@@ -63,12 +63,12 @@
                 console.log(obj.type);
                 console.log(Http.status);
                 console.log(Http.status == 200 && obj.type == "Client");
-                alert('1');
+                //alert('1');
                 if (Http.status == 200 && obj.type == "Client" ){
                     console.log("entrou aqui")
                     console.log(obj.type);
                     console.log(Http.status);
-                    alert('3');
+                    //alert('3');
                     return true;
                 }
                 else{
@@ -76,7 +76,7 @@
                     console.log("entrou aqui")
                     console.log(obj.type);
                     console.log(Http.status);
-                    alert('2');
+                    //alert('2');
                     return false;
                 }
                 //return false;
