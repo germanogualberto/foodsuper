@@ -6,30 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Supermercados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <h1>Supermercados Disponiveis</h1>
 
     <script>
-        function carregaSupermercados(){
+        function carregaSupermercados() {
             var dados = getSupermercados();
             console.log(dados);
 
-            for( i in dados){
+            for (i in dados) {
                 console.log(dados[i]);
-                var para = document.createElement("a");
-                var br = document.createElement("br");
-                var node = document.createTextNode(dados[i].name);
+                
+                // 1. Create the button
+                var button = document.createElement("button");
+                button.innerHTML = dados[i].name;
+                console.log(dados[i]._id);
+                //button.id = dados[i]._id;
 
-                para.href = "prateleira.html";
-                para.appendChild(node);
-                para.appendChild(br);
-                
-                var element = document.getElementById("supermercados");
-                element.appendChild(para);
-                
+                button.setAttribute('id',dados[i]._id);
+                // 2. Append somewhere
+                var list = document.getElementById("supermercados");
+                list.appendChild(button);
+
+                // 3. Add event handler
+                button.addEventListener("click", function () {
+                    alert(button.getAttribute('id'));
+                });
+
             }
 
 
+        }
+
+        function loadSupermercado() {
+            alert("deu certo");
         }
     </script>
 </head>
@@ -37,22 +47,22 @@
 <body onload="carregaSupermercados()">
 
     <div id="supermercados">
-        <p> Nome de supermercado aqui</p>
+        
     </div>
-    
+
     <br><button onclick="voltaTelaPrincipal()">voltar</button>
 
     <script>
-        function voltaTelaPrincipal(){
-                window.location.href = "mainUsuario.html";  
-            }
+        function voltaTelaPrincipal() {
+            window.location.href = "mainUsuario.html";
+        }
         function verPrateleira() {
             window.location.href = "prateleira.html";
 
         }
-        function getSupermercados(){
+        function getSupermercados() {
             const Http = new XMLHttpRequest();
-            const url = 'http://localhost:3000/supermarket' ;
+            const url = 'http://localhost:3000/supermarket';
             Http.open("GET", url, false);
             //Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
 
