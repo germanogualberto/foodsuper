@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tela principal</title>
 
-    <h1>Tela Usuario</h1>
+    <h1>Tela Supermercado</h1>
     
 </head>
 <body>
         
-        <button onclick="getSupermercados()">Listar Supermercados Disponiveis</button>
+        <button onclick="getProdutos()">Listar Produtos</button>
         <button onclick="listaPedidos()">Pedidos</button>
         <br>
         <button onclick="atualizardados()">Atualizar dados</button>
@@ -21,15 +21,16 @@
         <script>
     
             function atualizardados(){
+                //TODO updatesupermercado
                 window.location.href = "updateclient.html";
             }
             function sair(){
                 alert("Logout com sucesso")
                 window.location.href = "index.html";
             }
-            function getSupermercados(){
+            function getProdutos(){
                 //alert("Logout com sucesso")
-                window.location.href = "supermercados.html";
+                window.location.href = "produtos.html";
             }
 
             function listaPedidos() {
