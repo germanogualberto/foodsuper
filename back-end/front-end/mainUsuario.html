@@ -14,7 +14,7 @@
         <button onclick="listaPedidos()">Pedidos</button>
         <br>
         <button onclick="atualizardados()">Atualizar dados</button>
-        <button onclick="sair()">sair</button>
+        <button onclick="fazLogout()">sair</button>
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
@@ -23,10 +23,50 @@
             function atualizardados(){
                 window.location.href = "updateclient.html";
             }
-            function sair(){
+
+            function fazLogout(){
+                var status = logout();
+                if (status==true){
+                    alert("Logout com sucesso");
+                    window.location.href = "index.html";
+                    // window.location.href = "mainSupermercado.html";
+                }else{
+                    console.log("Erro no logout");
+                }
+            }
+            function logout(){
                 //alert("Logout com sucesso")
                 window.location.href = "index.html";
+                
+                const Http = new XMLHttpRequest();
+                const url='http://localhost:3000/logout';
+                Http.open("POST", url,false);
+                Http.setRequestHeader('Authorization','Bearer '+localStorage.getItem('token'));
+                //Http.responseType = 'json';
+                
+                Http.send(null);
+                console.log(Http.responseText);
+                console.log(Http.status);
+                Http.onreadystatechange=(e)=>{  
+                    console.log(Http.responseText);
+                        // Request finished. Do processing here.
+                };
+
+                //alert("teste");
+                if (Http.status == 200){
+                    return true;
+                }
+                else if (Http.status == 401){
+                    return false;
+                    alert("1");
+                }
+                else{
+                    // console.log(Http.status);
+                    return false;
+                }
+                alert('q');
             }
+
             function getSupermercados(){
                 //alert("Logout com sucesso")
                 window.location.href = "supermercados.html";

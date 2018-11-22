@@ -16,11 +16,11 @@ module.exports = (app) => {
       .exec()
       .then((user) => {
         if (!user) {
-          return res.status(400).end();
+          return res.status(404).end();
         }
 
         if (!user.verifyPassword(req.body.password)) {
-          return res.status(400).end();
+          return res.status(401).end();
         }
 
         User.findByIdAndUpdate(user._id, { token: uuid.v4() }, { new: true })

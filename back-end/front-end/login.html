@@ -15,13 +15,15 @@
         <br><br>
         <button onclick="fazLogin()">Fazer login</button>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+        
         
         <script >
+
+            
             function fazLogin(){
                 var status = login();
                 if (status==true){
-                    //alert("Login com sucesso")
+                   // alert("Login com sucesso")
                     window.location.href = "mainUsuario.html";
                     //window.location.href = "mainSupermercado.html";
                 }else{
@@ -32,21 +34,30 @@
             function login(){
                 const Http = new XMLHttpRequest();
                 const url='http://localhost:3000/login';
-                Http.open("POST", url);
+                Http.open("POST", url,false);
                 Http.setRequestHeader('Content-Type','application/json; charset=utf-8');
                 //Http.responseType = 'json';
+                
                 const body = JSON.stringify({
                     "email": document.getElementById("email").value ,
                     "password":document.getElementById("password").value,
                     });
     
                 Http.send(body);
-    
+
+                var obj = JSON.parse(Http.responseText);
+                //alert(obj.token);
+
+                localStorage.setItem("token", obj.token);
                 Http.onreadystatechange=(e)=>{  
                     console.log(Http.responseText);
                         // Request finished. Do processing here.
                 };
-                if (Http.status == 0){
+               
+                
+                console.log(Http.responseText);
+                alert('1');
+                if (Http.status == 200){
                     return true;
                 }
                 else{
