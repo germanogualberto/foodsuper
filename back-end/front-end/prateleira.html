@@ -1,34 +1,127 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Prateleira Supermercado1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <script>
+        function carregaProdutos() {
+            atualizaProdutos();
+        }
+    </script>
 </head>
-<body >
+
+<body onload="carregaProdutos()">
     <h1>Produtos:</h1>
-    Produto1
-    <button >Adicionar</button><br>
-    Produto2<br>
-    Produto3<br>
+    <div id="produtos">
+
+    </div>
     <h1>Carrinho:</h1>
-    Produto1
-    <button >Remover </button><br>
-    Produto2<br>
-    Produto3<br>
+    <div id="carrinho">
+        
+    </div>
+    <br>
     <button onclick="telaPedidos()">Fechar Compra </button><br>
     <button onclick="voltarTelaSupermercados()">Voltar </button><br>
 
     <script>
-    function voltarTelaSupermercados(){
-        window.location.href = "supermercados.html";
-    }
-    
-    function telaPedidos() {
-        window.location.href = "pedidoUsuario.html";
-    }
+        function voltarTelaSupermercados() {
+            window.location.href = "supermercados.html";
+        }
+
+        function telaPedidos() {
+            window.location.href = "pedidoUsuario.html";
+        }
+
+        function atualizaProdutos() {
+            var dados = getProdutos();
+            var ids = [];
+            console.log(dados);
+
+            var element = document.getElementById("produtos");
+            element.innerHTML = "";
+            for (i in dados) {
+                var button = document.createElement("button");
+                button.innerHTML = dados[i].name;
+                console.log(dados[i]._id);
+                ids.push(dados[i]._id);
+
+                //para.href = "prateleira.html";
+                var list = document.getElementById("produtos");
+                list.appendChild(button);
+                //para.appendChild(node);
+                //para.appendChild(br);
+
+
+                //element.appendChild(para);
+                button.addEventListener("click", function () {
+                    alert(ids[1]);
+                    atualizaCarrinho(dados[i].name);
+                    //localStorage.setItem('idSupermercado',ids[1]);
+                    //verPrateleira();
+                });
+
+            }
+        }
+
+        function atualizaCarrinho( prod) {
+            //var dados = getProdutos();
+            var ids = [];
+            //console.log(dados);
+
+            //var element = document.getElementById("carrinho");
+            //element.innerHTML = "";
+            var button = document.createElement("button");
+            button.innerHTML = prod;
+            //console.log(dados[i]._id);
+            //ids.push(dados[i]._id);
+
+            //para.href = "prateleira.html";
+            var list = document.getElementById("carrinho");
+            list.appendChild(button);
+            //para.appendChild(node);
+            //para.appendChild(br);
+
+
+            //element.appendChild(para);
+            button.addEventListener("click", function () {
+                alert(ids[1]);
+                //atualizaCarrinho();
+                //localStorage.setItem('idSupermercado',ids[1]);
+                //verPrateleira();
+            });
+
+        }
+        
+
+        function getProdutos() {
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/product/' + localStorage.getItem('idSupermercado');
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+
+            console.log('aqui1');
+            console.log(localStorage.getItem('_id'));
+            console.log(localStorage.getItem('token'));
+            console.log(Http.status);
+            console.log(obj);
+            console.log('aqui2');
+            return obj;
+        }
+
     </script>
 </body>
+
 </html>
