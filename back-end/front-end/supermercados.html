@@ -6,16 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Supermercados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-
+    
     <h1>Supermercados Disponiveis</h1>
+
+    <script>
+        function carregaSupermercados(){
+            var dados = getSupermercados();
+            console.log(dados);
+
+            for( i in dados){
+                console.log(dados[i]);
+                var para = document.createElement("a");
+                var br = document.createElement("br");
+                var node = document.createTextNode(dados[i].name);
+
+                para.href = "prateleira.html";
+                para.appendChild(node);
+                para.appendChild(br);
+                
+                var element = document.getElementById("supermercados");
+                element.appendChild(para);
+                
+            }
+
+
+        }
+    </script>
 </head>
 
-<body>
+<body onload="carregaSupermercados()">
 
-    Nome de supermercado aqui
+    <div id="supermercados">
+        <p> Nome de supermercado aqui</p>
+    </div>
+    
+
     <button onclick="verPrateleira()">Ver prateleira</button>
     <br><button onclick="voltaTelaPrincipal()">voltar</button>
+
     <script>
         function voltaTelaPrincipal(){
                 window.location.href = "mainUsuario.html";  
@@ -23,6 +51,24 @@
         function verPrateleira() {
             window.location.href = "prateleira.html";
 
+        }
+        function getSupermercados(){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/supermarket' ;
+            Http.open("GET", url, false);
+            //Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
         }
     </script>
 </body>
