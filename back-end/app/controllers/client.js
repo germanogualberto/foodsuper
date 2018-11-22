@@ -30,6 +30,9 @@ module.exports = (app) => {
    */
   controller.get = (req, res) => {
     const { _id } = req.params;
+    console.log(_id);
+    console.log({ _id });
+    console.log(req.params);
     Client.findOne({ _id })
       .lean(true)
       .exec((error, client) => {

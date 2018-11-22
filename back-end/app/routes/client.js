@@ -12,7 +12,7 @@ module.exports = (app) => {
   app.route('/clients').get(controller.list);
 
   app
-    .route('/client/:id')
+    .route('/client/:_id')
     .get(
       permissionUtils.isLoggedIn,
       permissionUtils.roleAuthorization(getByIdP),

@@ -10,6 +10,8 @@
         <h1>Entre seus dados</h1>
         Email do usuario
         <input type="text" value="user@email.com" id="email">
+        cliente=user@email.com
+        mercado=merc@mail.com
         <br>Senha 
         <input type="password" value="senha" id="password">
         <br><br>
@@ -21,16 +23,67 @@
 
             
             function fazLogin(){
+                localStorage.clear;
                 var status = login();
                 if (status==true){
                    // alert("Login com sucesso")
-                    window.location.href = "mainUsuario.html";
-                    //window.location.href = "mainSupermercado.html";
+
+                   if(ehCliente()){
+                        window.location.href = "mainUsuario.html";   
+                   }
+                   else{
+                    window.location.href = "mainSupermercado.html";
+                   }
                 }else{
                     console.log("Erro no login");
                 }
             }
     
+            function ehCliente(){
+                const Http = new XMLHttpRequest();
+                const url='http://localhost:3000/client/'+localStorage.getItem('_id');
+                Http.open("GET", url,false);
+                Http.setRequestHeader('Authorization','Bearer '+localStorage.getItem('token'));
+                
+                Http.send(null);
+
+                var obj = JSON.parse(Http.responseText);
+                //alert(obj.token);
+
+                Http.onreadystatechange=(e)=>{  
+                    console.log(Http.responseText);
+                        // Request finished. Do processing here.
+                };
+               
+                if(obj == null){
+                    return false;
+                }
+                
+                console.log(Http.responseText);
+                console.log(obj.type);
+                console.log(Http.status);
+                console.log(Http.status == 200 && obj.type == "Client");
+                alert('1');
+                if (Http.status == 200 && obj.type == "Client" ){
+                    console.log("entrou aqui")
+                    console.log(obj.type);
+                    console.log(Http.status);
+                    alert('3');
+                    return true;
+                }
+                else{
+                    //console.log(Http.status);
+                    console.log("entrou aqui")
+                    console.log(obj.type);
+                    console.log(Http.status);
+                    alert('2');
+                    return false;
+                }
+                //return false;
+                //alert("Supermercado cadastrado com sucesso");
+                return false;
+            }
+
             function login(){
                 const Http = new XMLHttpRequest();
                 const url='http://localhost:3000/login';
@@ -49,6 +102,7 @@
                 //alert(obj.token);
 
                 localStorage.setItem("token", obj.token);
+                localStorage.setItem("_id", obj._id);
                 Http.onreadystatechange=(e)=>{  
                     console.log(Http.responseText);
                         // Request finished. Do processing here.
@@ -56,7 +110,7 @@
                
                 
                 console.log(Http.responseText);
-                alert('1');
+                //alert('1');
                 if (Http.status == 200){
                     return true;
                 }

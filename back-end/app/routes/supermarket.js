@@ -10,7 +10,7 @@ module.exports = (app) => {
     .get(controller.list);
 
   app
-    .route('/supermarket/:id')
+    .route('/supermarket/:_id')
     .get(controller.get)
     .put(
       permissionUtils.isLoggedIn,

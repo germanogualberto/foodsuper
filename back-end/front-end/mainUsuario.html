@@ -27,7 +27,7 @@
             function fazLogout(){
                 var status = logout();
                 if (status==true){
-                    alert("Logout com sucesso");
+                    //alert("Logout com sucesso");
                     window.location.href = "index.html";
                     // window.location.href = "mainSupermercado.html";
                 }else{
@@ -36,7 +36,7 @@
             }
             function logout(){
                 //alert("Logout com sucesso")
-                window.location.href = "index.html";
+                //window.location.href = "index.html";
                 
                 const Http = new XMLHttpRequest();
                 const url='http://localhost:3000/logout';
