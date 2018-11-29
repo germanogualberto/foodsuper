@@ -1,5 +1,11 @@
 const http = require('http');
 const app = require('./config/express')();
+var path = require('path')
+
+var express = require('express');
+//express = app();
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 const mongoUri = process.env.MONGODB_URI;
 

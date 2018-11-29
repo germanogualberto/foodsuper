@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Supermercados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <h1>Supermercados Disponiveis</h1>
+    <link rel="stylesheet" href="/style.css" />
+   
 
     <script>
         function carregaSupermercados() {
@@ -30,7 +30,7 @@
 
                 // 3. Add event handler
                 button.addEventListener("click", function () {
-                    alert(ids[1]);
+                    //alert(ids[1]);
                     localStorage.setItem('idSupermercado',ids[1]);
                     verPrateleira();
                 });
@@ -47,7 +47,7 @@
 </head>
 
 <body onload="carregaSupermercados()">
-
+    <h1>Supermercados Disponiveis</h1>
     <div id="supermercados">
         
     </div>
