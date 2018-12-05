@@ -8,14 +8,13 @@ const PedidoSchema = mongoose.Schema(
       required: true,
       default: Date.now
     },
-    produtos: {
-      item: {
-        type: String,
-        required: true,
-        trim: true
-      }
-    },
+    produtos: [],
     idSupermercado: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    status: {
       type: String,
       required: true,
       trim: true
