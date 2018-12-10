@@ -1,3 +1,5 @@
+
+
 body {
     background-color: powderblue;
     align-content: center;
@@ -41,5 +43,11 @@ button {
 input {
     border-radius: 5px;
     margin-left: 50%;
+}
+
+div#carrinho {
+    max-width:500px;
+    margin: auto;
+    border: 3px solid white;
 }
 
