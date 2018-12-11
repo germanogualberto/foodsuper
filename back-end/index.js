@@ -64,4 +64,7 @@ app.get('/mainSupermercado.html', (req, res) => {
 app.get('/produtos.html', (req, res) => {
   res.sendFile('./front-end/produtos.html', { root: __dirname });
 });
+app.get('/pedido.html', (req, res) => {
+  res.sendFile('./front-end/pedido.html', { root: __dirname });
+});
 

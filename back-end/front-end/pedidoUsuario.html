@@ -50,11 +50,16 @@
                     //atualizaCarrinho(this.id);
                     //carrinho.push(this.id)
                     console.log(this.id);
-                    //localStorage.setItem('idSupermercado',ids[1]);
+                    localStorage.setItem('idPedido',this.id);
+                    telaDetalhePedido()
                     //verPrateleira();
                 });
 
             }
+        }
+        
+        function telaDetalhePedido() {
+            window.location.href = "pedido.html";
         }
 
         function getPedidos(){
