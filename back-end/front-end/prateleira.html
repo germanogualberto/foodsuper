@@ -48,6 +48,8 @@
                 button.innerHTML = dados[i].name;
                 console.log(dados[i]._id);
                 ids.push(dados[i]._id);
+                //button.id = ids[i]
+                button.id = dados[i].name;
 
                 //para.href = "prateleira.html";
                 var list = document.getElementById("produtos");
@@ -59,7 +61,7 @@
                 //element.appendChild(para);
                 button.addEventListener("click", function () {
                     //alert(ids[1]);
-                    atualizaCarrinho(dados[i].name);
+                    atualizaCarrinho(this.id);
                     //localStorage.setItem('idSupermercado',ids[1]);
                     //verPrateleira();
                 });

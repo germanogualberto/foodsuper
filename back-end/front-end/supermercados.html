@@ -21,8 +21,10 @@
                 // 1. Create the button
                 var button = document.createElement("button");
                 button.innerHTML = dados[i].name;
+                //button.id = 
                 console.log(dados[i]._id);
                 ids.push(dados[i]._id);
+                button.id = ids[i];
             
                 // 2. Append somewhere
                 var list = document.getElementById("supermercados");
@@ -31,7 +33,8 @@
                 // 3. Add event handler
                 button.addEventListener("click", function () {
                     //alert(ids[1]);
-                    localStorage.setItem('idSupermercado',ids[1]);
+                    console.log(this.id)
+                    localStorage.setItem('idSupermercado',this.id);
                     verPrateleira();
                 });
 
