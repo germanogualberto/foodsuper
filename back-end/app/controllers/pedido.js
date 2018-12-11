@@ -75,10 +75,10 @@ module.exports = (app) => {
     } = req.body;
 
     const newPedido = new Pedido();
-    newProduct.produtos = produtos;
-    newProduct.idCliente = idCliente;
-    newProduct.idSupermercado = idSupermercado;
-    newProduct.status = "new";
+    newPedido.produtos = produtos;
+    newPedido.idCliente = idCliente;
+    newPedido.idSupermercado = idSupermercado;
+    newPedido.status = "new";
 
     newPedido.save((error, ped) => {
       if (error) {
@@ -108,7 +108,6 @@ module.exports = (app) => {
     const {
       idSupermercado,
       idCliente,
-      _id,
       status
     } = req.body;
     const data = {};

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Prateleira Supermercado1</title>
+    <title>Prateleira Supermercado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
         function carregaProdutos() {
@@ -24,10 +24,11 @@
         
     </div>
     <br>
-    <button onclick="telaPedidos()">Fechar Compra </button><br>
+    <button onclick="fecharCompra()">Fechar Compra </button><br>
     <button onclick="voltarTelaSupermercados()">Voltar </button><br>
 
     <script>
+        var carrinho=[];
         function voltarTelaSupermercados() {
             window.location.href = "supermercados.html";
         }
@@ -35,7 +36,36 @@
         function telaPedidos() {
             window.location.href = "pedidoUsuario.html";
         }
+        
+        function fecharCompra(){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/pedido';
+            Http.open("POST", url,false);
+            Http.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            //Http.responseType = 'json';
+            const body = JSON.stringify({
+                "produtos": carrinho,
+                "idSupermercado": localStorage.getItem('idSupermercado'),
+                "idCliente": localStorage.getItem('_id')
+            });
 
+            Http.send(body);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
+
+            console.log(body);
+            console.log(Http.status);
+            if(Http.status==200){
+                //alert(" Produto cadastrado com sucesso");
+                telaPedidos();
+                //atualizaProdutos();
+            }
+            //alert("Algum problema com o pedido");
+            //voltaTelaLogin();
+            //telaPedidos();
+        }
         function atualizaProdutos() {
             var dados = getProdutos();
             var ids = [];
@@ -62,6 +92,8 @@
                 button.addEventListener("click", function () {
                     //alert(ids[1]);
                     atualizaCarrinho(this.id);
+                    carrinho.push(this.id)
+                    console.log(carrinho);
                     //localStorage.setItem('idSupermercado',ids[1]);
                     //verPrateleira();
                 });
