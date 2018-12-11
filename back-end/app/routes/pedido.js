@@ -24,7 +24,7 @@ module.exports = (app) => {
     );
 
     app
-    .route('/pedido/:idCliente')
+    .route('/pedidos/:idCliente')
     .get(controller.get2)
     .put(
       permissionUtils.isLoggedIn,
