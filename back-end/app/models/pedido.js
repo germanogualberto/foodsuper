@@ -16,7 +16,6 @@ const PedidoSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      required: true,
       trim: true
     },
     idCliente: {
