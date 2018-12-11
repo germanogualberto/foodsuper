@@ -36,4 +36,18 @@ module.exports = (app) => {
       permissionUtils.roleAuthorization(updateAndDeleteP),
       controller.delete
     );
+
+    app
+    .route('/pedidoss/:_id')
+    .get(controller.get3)
+    .put(
+      permissionUtils.isLoggedIn,
+      permissionUtils.roleAuthorization(updateAndDeleteP),
+      controller.update
+    )
+    .delete(
+      permissionUtils.isLoggedIn,
+      permissionUtils.roleAuthorization(updateAndDeleteP),
+      controller.delete
+    );
 };

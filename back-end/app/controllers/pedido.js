@@ -60,6 +60,25 @@ module.exports = (app) => {
       });
   };
 
+  /**
+   * Return pedido by _id.
+   * @param {*} req
+   * @param {*} res
+   * @return {Object} pedido
+   */
+  controller.get3 = (req, res) => {
+    const { _id } = req.params;
+    Pedido.find({ _id })
+      .lean(true)
+      .exec((error, ped) => {
+        if (error) {
+          console.log(`error: ${error}`);
+          return res.status(500).json(error);
+        }
+        return res.status(200).json(ped);
+      });
+  };
+
 
   /**
    * Add a pedido with passed properties
