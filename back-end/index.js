@@ -67,4 +67,7 @@ app.get('/produtos.html', (req, res) => {
 app.get('/pedido.html', (req, res) => {
   res.sendFile('./front-end/pedido.html', { root: __dirname });
 });
+app.get('/pedidoS.html', (req, res) => {
+  res.sendFile('./front-end/pedidoS.html', { root: __dirname });
+});
 
