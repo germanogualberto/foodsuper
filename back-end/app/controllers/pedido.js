@@ -124,20 +124,20 @@ module.exports = (app) => {
    * @return {Object} product updated
    */
   controller.update = (req, res) => {
-    const {
-      idSupermercado,
-      idCliente,
-      status
-    } = req.body;
+    //const {
+    //  idSupermercado,
+    //  idCliente,
+    //  status
+    //} = req.body;
     const data = {};
-    if (idCliente) data.idCliente = idCliente;
-    if (_id) data._id = _id;
-    if (idSupermercado) data.idSupermercado = idSupermercado;
-    if(status) data.status = status;
+    //if (idCliente) data.idCliente = idCliente;
+    //if (_id) data._id = _id;
+    //if (idSupermercado) data.idSupermercado = idSupermercado;
+    data.status = 'old';
 
     const { _id } = req.params;
 
-    Product.findOneAndUpdate({ _id }, data, { new: true })
+    Pedido.findOneAndUpdate({ _id }, data, { new: true })
       .lean(true)
       .exec((error, ped) => {
         if (error) {

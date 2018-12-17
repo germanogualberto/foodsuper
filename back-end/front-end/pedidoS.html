@@ -16,15 +16,45 @@
 </head>
 
 <body onload="carregaPedido()">
-  <h1>Detalhamento Pedido Usuario</h1>
+  <h1>Detalhamento Pedido Supermercado</h1>
   <div id="pedido"></div>
+  <button onclick="fecharPedido()">Fechar Pedido</button>
   <button onclick="telaPedidos()">Voltar</button>
+  
   <script>
+
+    function fecharPedido(){
+      const Http = new XMLHttpRequest();
+      const url = 'http://localhost:3000/pedidoss/' + localStorage.getItem('idPedido');
+      Http.open("PUT", url, false);
+      Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+      Http.send(null);
+
+      var obj = JSON.parse(Http.responseText);
+      //alert(obj.token);
+
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText);
+        // Request finished. Do processing here.
+      };
+
+      console.log('aqui1');
+      console.log(localStorage.getItem('_id'));
+      console.log(localStorage.getItem('token'));
+      console.log(Http.status);
+      console.log(obj);
+      console.log('aqui2');
+      
+      alert("pedido modificado")
+      //telaPedidos();
+    }
 
     function mostraPedido() {
       var dados = getPedido();
       var element = document.getElementById("pedido");
       element.innerHTML = "";
+      
       console.log(dados)
       console.log(dados[0].produtos)
       for (i in dados[0].produtos) {
@@ -32,26 +62,14 @@
         var item = document.createElement("ul");
         item.innerHTML = dados[0].produtos[i];
         console.log(dados[0].produtos[i]);
-        //ids.push(dados[i]._id);
-        //button.id = ids[i]
+    
         item.id = dados[0].produtos[i];
 
-        //para.href = "prateleira.html";
         var list = document.getElementById("pedido");
         list.appendChild(item);
-        //para.appendChild(node);
-        //para.appendChild(br);
-
-
-        //element.appendChild(para);
-        item.addEventListener("click", function () {
-          //alert(ids[1]);
-          //atualizaCarrinho(this.id);
-          //carrinho.push(this.id)
+       
+        item.addEventListener("click", function () {   
           console.log(this.id);
-          //localStorage.setItem('idPedido', this.id);
-          //telaDetalhePedido()
-          //verPrateleira();
         });
       }
 
