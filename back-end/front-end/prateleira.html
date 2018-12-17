@@ -20,6 +20,7 @@
 
     </div>
     <h1>Carrinho:</h1>
+    (Clique para remover)<br>
     <div id="carrinho">
         
     </div>
@@ -76,6 +77,7 @@
             for (i in dados) {
                 var button = document.createElement("button");
                 button.innerHTML = dados[i].name;
+                //button.setAttribute("href","");
                 console.log(dados[i]._id);
                 
                 //button.id = ids[i]
@@ -84,7 +86,13 @@
 
                 //para.href = "prateleira.html";
                 var list = document.getElementById("produtos");
+                var quantidade = document.createElement("input");
+                quantidade.id="id"+button.id;
+                var br = document.createElement("br");
                 list.appendChild(button);
+                list.appendChild(quantidade);
+                list.appendChild(br);
+                //list.appendChild("<br>");
                 //para.appendChild(node);
                 //para.appendChild(br);
 
@@ -92,8 +100,9 @@
                 //element.appendChild(para);
                 button.addEventListener("click", function () {
                     //alert(ids[1]);
-                    atualizaCarrinho(this.id);
-                    carrinho.push([this.id,1])
+                    var quant=document.getElementById("id"+this.id).value
+                    atualizaCarrinho(this.id, quant);
+                    carrinho.push([this.id, quant]);
                     console.log(carrinho);
                     //localStorage.setItem('idSupermercado',ids[1]);
                     //verPrateleira();
@@ -102,18 +111,18 @@
             }
         }
 
-        function atualizaCarrinho( id) {
+        function atualizaCarrinho( id, quantidade) {
             var dados = getProduto(id);
             var ids = [];
          
             var button = document.createElement("button");
-            button.innerHTML = dados[0].name;
+            button.innerHTML = quantidade+" x "+dados[0].name;
            
             var list = document.getElementById("carrinho");
             list.appendChild(button);
           
             button.addEventListener("click", function () {
-                alert(ids[1]);
+                //alert(ids[1]);
             
             });
 
