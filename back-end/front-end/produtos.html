@@ -109,9 +109,9 @@
             //alert("aqui");
             Http.send(null);
             //alert("aqui");
-            //Http.onreadystatechange = (e) => {
-            //    console.log(Http.responseText)
-            //};
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText)
+            };
 
             //console.log(body);
             console.log(Http.status);
@@ -120,7 +120,7 @@
                 console.log("sucesso ao atualizar");
                 console.log(Http.status);
                 
-               // atualizaProdutos();
+               atualizaProdutos();
             }
             else{
                 console.log("ocorreu um erro ao atualizar");
