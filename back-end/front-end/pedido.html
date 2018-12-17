@@ -10,7 +10,7 @@
 
   <script>
     function carregaPedido() {
-      mostraPedido()
+      mostraPedido();
     }
   </script>
 </head>
@@ -18,25 +18,30 @@
 <body onload="carregaPedido()">
   <h1>Detalhamento Pedido Usuario</h1>
   <div id="pedido"></div>
+  <div id="total"></div>
   <h2>Contato do supermercado:</h2>
   <div id="contato"></div>
   <button onclick="telaPedidos()">Voltar</button>
   <script>
 
     function mostraPedido() {
-      
+
       var dados = getPedido();
       var dadosSupermercado = getSupermercado(dados[0].idSupermercado);
       var element = document.getElementById("pedido");
+      var total = document.getElementById("total");
       element.innerHTML = "";
       var element2 = document.getElementById("contato");
       element2.innerHTML = "";
       console.log(dados)
       console.log(dados[0].produtos)
+      var soma=0;
       for (i in dados[0].produtos) {
         console.log("alo")
         var item = document.createElement("ul");
-        item.innerHTML = dados[0].produtos[i];
+        var prod=dados[0].produtos[i];
+        item.innerHTML = prod[2]+" x "+"R$ "+prod[3]+" "+prod[1];
+        soma = soma+(prod[3]*prod[2]);
         console.log(dados[0].produtos[i]);
 
         //button.id = ids[i]
@@ -44,35 +49,37 @@
 
         var list = document.getElementById("pedido");
         list.appendChild(item);
-        
+
         item.addEventListener("click", function () {
           console.log(this.id);
         });
       }
-      
-      element2.innerHTML = "email: "+dadosSupermercado.email;
+      total.innerHTML = "Total a pagar: R$ " + soma;
+//      calculaTotal(soma);
+
+      element2.innerHTML = "email: " + dadosSupermercado.email;
 
 
     }
 
-    function getSupermercado(idSupermercado){
-            const Http = new XMLHttpRequest();
-            const url = 'http://localhost:3000/supermarket/' + idSupermercado;
-            Http.open("GET", url, false);
-            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    function getSupermercado(idSupermercado) {
+      const Http = new XMLHttpRequest();
+      const url = 'http://localhost:3000/supermarket/' + idSupermercado;
+      Http.open("GET", url, false);
+      Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
 
-            Http.send(null);
+      Http.send(null);
 
-            var obj = JSON.parse(Http.responseText);
-            //alert(obj.token);
+      var obj = JSON.parse(Http.responseText);
+      //alert(obj.token);
 
-            Http.onreadystatechange = (e) => {
-                console.log(Http.responseText);
-                // Request finished. Do processing here.
-            };
-            console.log(obj);
-            return obj;
-        }
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText);
+        // Request finished. Do processing here.
+      };
+      console.log(obj);
+      return obj;
+    }
     function telaPedidos() {
       window.location.href = "pedidoUsuario.html";
     }

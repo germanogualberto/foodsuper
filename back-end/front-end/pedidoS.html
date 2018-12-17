@@ -18,14 +18,15 @@
 <body onload="carregaPedido()">
   <h1>Detalhamento Pedido Supermercado</h1>
   <div id="pedido"></div>
+  <div id="total"></div>
   <h2>Contato do Usuario:</h2>
   <div id="contato"></div>
   <button id="buttonfechar" onclick="fecharPedido()">Fechar Pedido</button>
   <button onclick="telaPedidos()">Voltar</button>
-  
+
   <script>
 
-    function fecharPedido(){
+    function fecharPedido() {
       const Http = new XMLHttpRequest();
       const url = 'http://localhost:3000/pedidoss/' + localStorage.getItem('idPedido');
       Http.open("PUT", url, false);
@@ -47,7 +48,7 @@
       console.log(Http.status);
       console.log(obj);
       console.log('aqui2');
-      
+
       //alert("pedido modificado")
       telaPedidos();
     }
@@ -59,56 +60,61 @@
       element.innerHTML = "";
       var element2 = document.getElementById("contato");
       element2.innerHTML = "";
-      
-      if (dados[0].status != 'new'){
+      var total = document.getElementById("total");
+
+      if (dados[0].status != 'new') {
         document.getElementById("buttonfechar").remove();
       }
 
+      var soma = 0;
       console.log(dados)
       console.log(dados[0].produtos)
       for (i in dados[0].produtos) {
         console.log("alo")
         var item = document.createElement("ul");
-        item.innerHTML = dados[0].produtos[i];
+        var prod = dados[0].produtos[i];
+        item.innerHTML = prod[2] + " x " + "R$ " + prod[3] + " " + prod[1];
+        soma = soma+(prod[3]*prod[2]);
         console.log(dados[0].produtos[i]);
-    
+
         item.id = dados[0].produtos[i];
 
         var list = document.getElementById("pedido");
         list.appendChild(item);
-       
-        item.addEventListener("click", function () {   
+
+        item.addEventListener("click", function () {
           console.log(this.id);
         });
       }
+      total.innerHTML = "Total a pagar: R$ " + soma;
 
-      element2.innerHTML = "email: "+dadosUsuario.email+
-      "<br>Rua: "+dadosUsuario.address.street+","+dadosUsuario.address.number+
-      "<br>Bairro: "+dadosUsuario.address.neighborhood+
-      "<br>CEP: "+dadosUsuario.address.zipcode
-      ;
+      element2.innerHTML = "email: " + dadosUsuario.email +
+        "<br>Rua: " + dadosUsuario.address.street + "," + dadosUsuario.address.number +
+        "<br>Bairro: " + dadosUsuario.address.neighborhood +
+        "<br>CEP: " + dadosUsuario.address.zipcode
+        ;
       //element2.innerHTML = "email: "+dadosUsuario.email;
 
 
     }
-    function getUsuario(idCliente){
-            const Http = new XMLHttpRequest();
-            const url = 'http://localhost:3000/client/' + idCliente;
-            Http.open("GET", url, false);
-            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    function getUsuario(idCliente) {
+      const Http = new XMLHttpRequest();
+      const url = 'http://localhost:3000/client/' + idCliente;
+      Http.open("GET", url, false);
+      Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
 
-            Http.send(null);
+      Http.send(null);
 
-            var obj = JSON.parse(Http.responseText);
-            //alert(obj.token);
+      var obj = JSON.parse(Http.responseText);
+      //alert(obj.token);
 
-            Http.onreadystatechange = (e) => {
-                console.log(Http.responseText);
-                // Request finished. Do processing here.
-            };
-            console.log(obj);
-            return obj;
-        }
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText);
+        // Request finished. Do processing here.
+      };
+      console.log(obj);
+      return obj;
+    }
     function telaPedidos() {
       window.location.href = "pedidoSupermercado.html";
     }
