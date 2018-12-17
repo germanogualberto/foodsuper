@@ -40,6 +40,7 @@
                 
                 //button.id = ids[i]
                 button.id = dados[i]._id;
+                var br = document.createElement("br");
 
 
                 var list1 = document.getElementById("pedidosAbertos");
@@ -47,9 +48,11 @@
 
                 if (dados[i].status == 'new') {
                     list1.appendChild(button);
+                    list1.appendChild(br);
                 }
                 else {
                     list2.appendChild(button);
+                    list2.appendChild(br);
                 }
 
 

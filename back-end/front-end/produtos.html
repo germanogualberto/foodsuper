@@ -72,19 +72,20 @@
             element.innerHTML = "";
             for( i in dados){
                 console.log(dados[i]);
-                var para = document.createElement("a");
-                para.setAttribute('href',"");
-                para.setAttribute('id',dados[i]._id)
+                var button = document.createElement("button");
+                //button.setAttribute('href',"");
+                button.setAttribute('id',dados[i]._id)
                 var br = document.createElement("br");
-                var node = document.createTextNode(dados[i].name+' R$: '+dados[i].price);
+                button.innerHTML = ' R$: '+dados[i].price+' '+dados[i].name;
                 
                 //para.href = "prateleira.html";
-                para.appendChild(node);
-                para.appendChild(br);
+                //button.appendChild(node);
+                //button.appendChild(br);
                 
-                element.appendChild(para);
+                element.appendChild(button);
+                element.appendChild(br);
 
-                para.addEventListener("click", function () {
+                button.addEventListener("click", function () {
                     //alert(ids[1]);
                     //atualizaCarrinho(this.id);
                     //carrinho.push(this.id)
@@ -125,10 +126,11 @@
             else{
                 console.log("ocorreu um erro ao atualizar");
                 console.log(Http.status);
+                atualizaProdutos();
             }
             //alert("Supermercado cadastrado com sucesso");
             //voltaTelaLogin();
-            //atualizaProdutos();
+            atualizaProdutos();
         }
 
         function getProdutos(){

@@ -29,8 +29,10 @@
                 button.id = ids[i];
             
                 // 2. Append somewhere
+                var br = document.createElement("br");
                 var list = document.getElementById("supermercados");
                 list.appendChild(button);
+                list.appendChild(br);
 
                 // 3. Add event handler
                 button.addEventListener("click", function () {

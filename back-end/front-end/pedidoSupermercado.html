@@ -47,12 +47,15 @@
                 //para.href = "prateleira.html";
                 var list1 = document.getElementById("pedidosAbertos");
                 var list2 = document.getElementById("pedidosFechados");
+                var br = document.createElement("br");
 
-                if (dados[i].status == 'new') {
+               if (dados[i].status == 'new') {
                     list1.appendChild(button);
+                    list1.appendChild(br);
                 }
                 else {
                     list2.appendChild(button);
+                    list2.appendChild(br);
                 }
 
                 //para.appendChild(node);
