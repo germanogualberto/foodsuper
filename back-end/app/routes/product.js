@@ -22,4 +22,12 @@ module.exports = (app) => {
       permissionUtils.roleAuthorization(updateAndDeleteP),
       controller.delete
     );
+  
+  app
+    .route('/productDel/:_id')
+    .put(
+      permissionUtils.isLoggedIn,
+      permissionUtils.roleAuthorization(updateAndDeleteP),
+      controller.delete
+    );
 };

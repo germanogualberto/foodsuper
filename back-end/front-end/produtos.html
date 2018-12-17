@@ -23,6 +23,7 @@
     <br>
 
     <h2>Produtos Cadastrados</h2>
+    (Clique para remover)<br>
     <div id="produtos">
         
         
@@ -72,17 +73,62 @@
             for( i in dados){
                 console.log(dados[i]);
                 var para = document.createElement("a");
+                para.setAttribute('href',"");
+                para.setAttribute('id',dados[i]._id)
                 var br = document.createElement("br");
                 var node = document.createTextNode(dados[i].name);
-
+                
                 //para.href = "prateleira.html";
                 para.appendChild(node);
                 para.appendChild(br);
-
                 
                 element.appendChild(para);
+
+                para.addEventListener("click", function () {
+                    //alert(ids[1]);
+                    //atualizaCarrinho(this.id);
+                    //carrinho.push(this.id)
+                    removeProduto(this.id);
+                    //localStorage.setItem('idSupermercado',ids[1]);
+                    //verPrateleira();
+                });
                 
             }
+        }
+
+        function removeProduto(id){
+            //alert(id);
+
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/productDel/' + id;
+            Http.open("PUT", url);
+            //Http.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+            
+            //Http.responseType = 'json';
+            //alert("aqui");
+            Http.send(null);
+            //alert("aqui");
+            //Http.onreadystatechange = (e) => {
+            //    console.log(Http.responseText)
+            //};
+
+            //console.log(body);
+            console.log(Http.status);
+            if(Http.status==200){
+                //alert(" Produto cadastrado com sucesso");
+                console.log("sucesso ao atualizar");
+                console.log(Http.status);
+                
+               // atualizaProdutos();
+            }
+            else{
+                console.log("ocorreu um erro ao atualizar");
+                console.log(Http.status);
+            }
+            //alert("Supermercado cadastrado com sucesso");
+            //voltaTelaLogin();
+            //atualizaProdutos();
         }
 
         function getProdutos(){

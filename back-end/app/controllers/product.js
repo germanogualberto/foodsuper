@@ -113,9 +113,9 @@ module.exports = (app) => {
    * @param {*} res
    */
   controller.delete = (req, res) => {
-    const { idSupermercado } = req.params;
+    const { _id } = req.params;
 
-    Product.findByIdAndDelete({ idSupermercado }).exec((error) => {
+    Product.findOneAndDelete(_id).exec((error) => {
       if (error) {
         console.log(`error: ${error}`);
         return res.status(500).json(error);
