@@ -18,13 +18,19 @@
 <body onload="carregaPedido()">
   <h1>Detalhamento Pedido Usuario</h1>
   <div id="pedido"></div>
+  <h2>Contato do supermercado:</h2>
+  <div id="contato"></div>
   <button onclick="telaPedidos()">Voltar</button>
   <script>
 
     function mostraPedido() {
+      
       var dados = getPedido();
+      var dadosSupermercado = getSupermercado(dados[0].idSupermercado);
       var element = document.getElementById("pedido");
       element.innerHTML = "";
+      var element2 = document.getElementById("contato");
+      element2.innerHTML = "";
       console.log(dados)
       console.log(dados[0].produtos)
       for (i in dados[0].produtos) {
@@ -32,31 +38,41 @@
         var item = document.createElement("ul");
         item.innerHTML = dados[0].produtos[i];
         console.log(dados[0].produtos[i]);
-        //ids.push(dados[i]._id);
+
         //button.id = ids[i]
         item.id = dados[0].produtos[i];
 
-        //para.href = "prateleira.html";
         var list = document.getElementById("pedido");
         list.appendChild(item);
-        //para.appendChild(node);
-        //para.appendChild(br);
-
-
-        //element.appendChild(para);
+        
         item.addEventListener("click", function () {
-          //alert(ids[1]);
-          //atualizaCarrinho(this.id);
-          //carrinho.push(this.id)
           console.log(this.id);
-          //localStorage.setItem('idPedido', this.id);
-          //telaDetalhePedido()
-          //verPrateleira();
         });
       }
+      
+      element2.innerHTML = "email: "+dadosSupermercado.email;
 
 
     }
+
+    function getSupermercado(idSupermercado){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/supermarket/' + idSupermercado;
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
+        }
     function telaPedidos() {
       window.location.href = "pedidoUsuario.html";
     }

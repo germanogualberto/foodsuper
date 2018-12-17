@@ -18,7 +18,9 @@
 <body onload="carregaPedido()">
   <h1>Detalhamento Pedido Supermercado</h1>
   <div id="pedido"></div>
-  <button onclick="fecharPedido()">Fechar Pedido</button>
+  <h2>Contato do Usuario:</h2>
+  <div id="contato"></div>
+  <button id="buttonfechar" onclick="fecharPedido()">Fechar Pedido</button>
   <button onclick="telaPedidos()">Voltar</button>
   
   <script>
@@ -52,9 +54,16 @@
 
     function mostraPedido() {
       var dados = getPedido();
+      var dadosUsuario = getUsuario(dados[0].idCliente);
       var element = document.getElementById("pedido");
       element.innerHTML = "";
+      var element2 = document.getElementById("contato");
+      element2.innerHTML = "";
       
+      if (dados[0].status != 'new'){
+        document.getElementById("buttonfechar").remove();
+      }
+
       console.log(dados)
       console.log(dados[0].produtos)
       for (i in dados[0].produtos) {
@@ -73,8 +82,33 @@
         });
       }
 
+      element2.innerHTML = "email: "+dadosUsuario.email+
+      "<br>Rua: "+dadosUsuario.address.street+","+dadosUsuario.address.number+
+      "<br>Bairro: "+dadosUsuario.address.neighborhood+
+      "<br>CEP: "+dadosUsuario.address.zipcode
+      ;
+      //element2.innerHTML = "email: "+dadosUsuario.email;
+
 
     }
+    function getUsuario(idCliente){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/client/' + idCliente;
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
+        }
     function telaPedidos() {
       window.location.href = "pedidoSupermercado.html";
     }
