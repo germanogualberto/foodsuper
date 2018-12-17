@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
         function carregaProdutos() {
+            calculaTotal();
             atualizaProdutos();
         }
     </script>
@@ -16,15 +17,18 @@
 
 <body onload="carregaProdutos()">
     <h1>Produtos:</h1>
+    (Clique para adicionar ao carrinho)<br>
     <div id="produtos">
 
     </div>
     <h1>Carrinho:</h1>
     (Clique para remover)<br>
-    <div id="carrinho">
-        
-    </div>
+    <div id="carrinho"></div>
     <br>
+
+    <div id="total"></div>
+    <br>
+
     <button onclick="fecharCompra()">Fechar Compra </button><br>
     <button onclick="voltarTelaSupermercados()">Voltar </button><br>
 
@@ -82,15 +86,19 @@
                 
                 //button.id = ids[i]
                 button.id = dados[i]._id;
-                button.innerHTML = dados[i].name;
+                button.innerHTML = "R$ "+dados[i].price+" "+dados[i].name;
 
                 //para.href = "prateleira.html";
                 var list = document.getElementById("produtos");
                 var quantidade = document.createElement("input");
+                //var preco = document.createElement("ol");
+                //preco.innerHTML="teste";
                 quantidade.id="id"+button.id;
+                quantidade.setAttribute("value",1);
                 var br = document.createElement("br");
                 list.appendChild(button);
                 list.appendChild(quantidade);
+                //list.appendChild(preco);
                 list.appendChild(br);
                 //list.appendChild("<br>");
                 //para.appendChild(node);
@@ -104,6 +112,7 @@
                     atualizaCarrinho(this.id, quant);
                     carrinho.push([this.id, quant]);
                     console.log(carrinho);
+                    calculaTotal();
                     //localStorage.setItem('idSupermercado',ids[1]);
                     //verPrateleira();
                 });
@@ -116,16 +125,37 @@
             var ids = [];
          
             var button = document.createElement("button");
-            button.innerHTML = quantidade+" x "+dados[0].name;
+            button.innerHTML = quantidade+" x "+"R$ "+dados[0].price+" "+dados[0].name;
            
             var list = document.getElementById("carrinho");
+            var br = document.createElement("br");
             list.appendChild(button);
+            list.appendChild(br);
           
             button.addEventListener("click", function () {
                 this.remove();
+                carrinho.pop(this.id)
+                calculaTotal();
             
             });
+            calculaTotal();
 
+        }
+
+        function calculaTotal(){
+            var total = document.getElementById("total");
+            var sum=0;
+            console.log("carrinho")
+            console.log(carrinho)
+            for (i in  carrinho){
+                //console.log("produto");
+                console.log(carrinho[i]);
+                var prod = getProduto(carrinho[i][0]);
+                console.log(prod[0])
+                sum = sum+(prod[0].price*carrinho[i][1]);
+            }
+            console.log("fim carrinho")
+            total.innerHTML = "Total a pagar: R$ "+sum;
         }
 
         function getProduto(id){
