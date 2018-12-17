@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/style.css" />
     <script>
-        function carregaPedidos(){
+        function carregaPedidos() {
             atualizaPedidos()
         }
     </script>
 </head>
+
 <body onload="carregaPedidos()">
 
     <h1>Pedidos</h1>
-    <div id="pedidos"></div>
-    
-    
-    Pedido1 Status<br>
-    Pedido2 Status<br>
+    <h2>Abertos:</h2>
+    <div id="pedidosAbertos"></div>
+    <h2>Fechados:</h2>
+    <div id="pedidosFechados"></div>
     <button onclick="voltarTelaPrincipal()">Voltar</button>
     <script>
-        function atualizaPedidos(){
+        function atualizaPedidos() {
             var dados = getPedidos();
             var ids = [];
             console.log(dados);
 
-            var element = document.getElementById("pedidos");
-            element.innerHTML = "";
+            var element1 = document.getElementById("pedidosAbertos");
+            element1.innerHTML = "";
+            var element2 = document.getElementById("pedidosFechados");
+            element2.innerHTML = "";
             for (i in dados) {
                 var button = document.createElement("button");
                 button.innerHTML = dados[i]._id;
@@ -37,11 +40,16 @@
                 //button.id = ids[i]
                 button.id = dados[i]._id;
 
-                //para.href = "prateleira.html";
-                var list = document.getElementById("pedidos");
-                list.appendChild(button);
-                //para.appendChild(node);
-                //para.appendChild(br);
+
+                var list1 = document.getElementById("pedidosAbertos");
+                var list2 = document.getElementById("pedidosFechados");
+
+                if (dados[i].status == 'new') {
+                    list1.appendChild(button);
+                }
+                else {
+                    list2.appendChild(button);
+                }
 
 
                 //element.appendChild(para);
@@ -50,19 +58,19 @@
                     //atualizaCarrinho(this.id);
                     //carrinho.push(this.id)
                     console.log(this.id);
-                    localStorage.setItem('idPedido',this.id);
+                    localStorage.setItem('idPedido', this.id);
                     telaDetalhePedido()
                     //verPrateleira();
                 });
 
             }
         }
-        
+
         function telaDetalhePedido() {
             window.location.href = "pedido.html";
         }
 
-        function getPedidos(){
+        function getPedidos() {
             const Http = new XMLHttpRequest();
             const url = 'http://localhost:3000/pedidos/' + localStorage.getItem('_id');
             Http.open("GET", url, false);
@@ -87,9 +95,10 @@
             return obj;
         }
 
-    function voltarTelaPrincipal() {
-        window.location.href = "mainUsuario.html";
-    }
+        function voltarTelaPrincipal() {
+            window.location.href = "mainUsuario.html";
+        }
     </script>
 </body>
+
 </html>
