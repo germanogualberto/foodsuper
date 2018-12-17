@@ -68,7 +68,7 @@
         }
         function atualizaProdutos() {
             var dados = getProdutos();
-            var ids = [];
+           
             console.log(dados);
 
             var element = document.getElementById("produtos");
@@ -77,9 +77,10 @@
                 var button = document.createElement("button");
                 button.innerHTML = dados[i].name;
                 console.log(dados[i]._id);
-                ids.push(dados[i]._id);
+                
                 //button.id = ids[i]
-                button.id = dados[i].name;
+                button.id = dados[i]._id;
+                button.innerHTML = dados[i].name;
 
                 //para.href = "prateleira.html";
                 var list = document.getElementById("produtos");
@@ -92,7 +93,7 @@
                 button.addEventListener("click", function () {
                     //alert(ids[1]);
                     atualizaCarrinho(this.id);
-                    carrinho.push(this.id)
+                    carrinho.push([this.id,1])
                     console.log(carrinho);
                     //localStorage.setItem('idSupermercado',ids[1]);
                     //verPrateleira();
@@ -101,33 +102,46 @@
             }
         }
 
-        function atualizaCarrinho( prod) {
-            //var dados = getProdutos();
+        function atualizaCarrinho( id) {
+            var dados = getProduto(id);
             var ids = [];
-            //console.log(dados);
-
-            //var element = document.getElementById("carrinho");
-            //element.innerHTML = "";
+         
             var button = document.createElement("button");
-            button.innerHTML = prod;
-            //console.log(dados[i]._id);
-            //ids.push(dados[i]._id);
-
-            //para.href = "prateleira.html";
+            button.innerHTML = dados[0].name;
+           
             var list = document.getElementById("carrinho");
             list.appendChild(button);
-            //para.appendChild(node);
-            //para.appendChild(br);
-
-
-            //element.appendChild(para);
+          
             button.addEventListener("click", function () {
                 alert(ids[1]);
-                //atualizaCarrinho();
-                //localStorage.setItem('idSupermercado',ids[1]);
-                //verPrateleira();
+            
             });
 
+        }
+
+        function getProduto(id){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/productt/' + id;
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+
+            console.log('aqui1');
+            console.log(id);
+            console.log(localStorage.getItem('token'));
+            console.log(Http.status);
+            console.log(obj);
+            console.log('aqui2');
+            return obj;
         }
         
 

@@ -42,6 +42,26 @@ module.exports = (app) => {
   };
 
   /**
+   * Return product by _id.
+   * @param {*} req
+   * @param {*} res
+   * @return {Object} product
+   */
+  controller.get2 = (req, res) => {
+    const { _id } = req.params;
+    Product.find({ _id })
+      .lean(true)
+      .exec((error, prod) => {
+        if (error) {
+          console.log(`error: ${error}`);
+          return res.status(500).json(error);
+        }
+        return res.status(200).json(prod);
+      });
+  };
+
+
+  /**
    * Add a product with passed properties
    * @param {*} req
    * @param {*} res

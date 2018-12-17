@@ -22,6 +22,20 @@ module.exports = (app) => {
       permissionUtils.roleAuthorization(updateAndDeleteP),
       controller.delete
     );
+
+    app
+    .route('/productt/:_id')
+    .get(controller.get2)
+    .put(
+      permissionUtils.isLoggedIn,
+      permissionUtils.roleAuthorization(updateAndDeleteP),
+      controller.update
+    )
+    .delete(
+      permissionUtils.isLoggedIn,
+      permissionUtils.roleAuthorization(updateAndDeleteP),
+      controller.delete
+    );
   
   app
     .route('/productDel/:_id')
