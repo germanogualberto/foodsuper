@@ -29,7 +29,6 @@
 
         function atualizaPedidos() {
             var dados = getPedidos();
-            var ids = [];
             console.log(dados);
 
             var element1 = document.getElementById("pedidosAbertos");
@@ -37,10 +36,11 @@
             var element2 = document.getElementById("pedidosFechados");
             element2.innerHTML = "";
             for (i in dados) {
+                var dadosUsuario = getUsuario(dados[i].idCliente);
                 var button = document.createElement("button");
-                button.innerHTML = dados[i]._id;
+                button.innerHTML = dadosUsuario.name +' '+ dados[i].createdAt;
                 console.log(dados[i]._id);
-                ids.push(dados[i]._id);
+         
                 //button.id = ids[i]
                 button.id = dados[i]._id;
 
@@ -73,7 +73,26 @@
 
             }
         }
+        
 
+        function getUsuario(idCliente){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/client/' + idCliente;
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
+        }
         function telaDetalhePedido() {
             window.location.href = "pedidoS.html";
         }

@@ -25,7 +25,7 @@
     <script>
         function atualizaPedidos() {
             var dados = getPedidos();
-            var ids = [];
+            
             console.log(dados);
 
             var element1 = document.getElementById("pedidosAbertos");
@@ -33,10 +33,11 @@
             var element2 = document.getElementById("pedidosFechados");
             element2.innerHTML = "";
             for (i in dados) {
+                var dadosSupermercado = getSupermercado(dados[i].idSupermercado);
                 var button = document.createElement("button");
-                button.innerHTML = dados[i]._id;
+                button.innerHTML = dadosSupermercado.name +' '+ dados[i].createdAt;
                 console.log(dados[i]._id);
-                ids.push(dados[i]._id);
+                
                 //button.id = ids[i]
                 button.id = dados[i]._id;
 
@@ -64,6 +65,25 @@
                 });
 
             }
+        }
+
+        function getSupermercado(idSupermercado){
+            const Http = new XMLHttpRequest();
+            const url = 'http://localhost:3000/supermarket/' + idSupermercado;
+            Http.open("GET", url, false);
+            Http.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+
+            Http.send(null);
+
+            var obj = JSON.parse(Http.responseText);
+            //alert(obj.token);
+
+            Http.onreadystatechange = (e) => {
+                console.log(Http.responseText);
+                // Request finished. Do processing here.
+            };
+            console.log(obj);
+            return obj;
         }
 
         function telaDetalhePedido() {
