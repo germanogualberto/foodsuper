@@ -33,7 +33,7 @@
     <button onclick="voltarTelaSupermercados()">Voltar </button><br>
 
     <script>
-        var carrinho=[];
+        var carrinho = [];
         function voltarTelaSupermercados() {
             window.location.href = "supermercados.html";
         }
@@ -41,11 +41,11 @@
         function telaPedidos() {
             window.location.href = "pedidoUsuario.html";
         }
-        
-        function fecharCompra(){
+
+        function fecharCompra() {
             const Http = new XMLHttpRequest();
             const url = 'http://localhost:3000/pedido';
-            Http.open("POST", url,false);
+            Http.open("POST", url, false);
             Http.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
             //Http.responseType = 'json';
             const body = JSON.stringify({
@@ -62,18 +62,16 @@
 
             console.log(body);
             console.log(Http.status);
-            if(Http.status==200){
+            if (Http.status == 200) {
                 //alert(" Produto cadastrado com sucesso");
                 telaPedidos();
                 //atualizaProdutos();
             }
-            //alert("Algum problema com o pedido");
-            //voltaTelaLogin();
-            //telaPedidos();
+
         }
         function atualizaProdutos() {
             var dados = getProdutos();
-           
+
             console.log(dados);
 
             var element = document.getElementById("produtos");
@@ -83,82 +81,91 @@
                 button.innerHTML = dados[i].name;
                 //button.setAttribute("href","");
                 console.log(dados[i]._id);
-                
+
                 //button.id = ids[i]
                 button.id = dados[i]._id;
-                button.innerHTML = "R$ "+dados[i].price+" "+dados[i].name;
+                button.innerHTML = "R$ " + dados[i].price + " " + dados[i].name;
 
                 //para.href = "prateleira.html";
                 var list = document.getElementById("produtos");
                 var quantidade = document.createElement("input");
                 //var preco = document.createElement("ol");
                 //preco.innerHTML="teste";
-                quantidade.id="id"+button.id;
-                quantidade.setAttribute("value",1);
+                quantidade.id = "id" + button.id;
+                quantidade.setAttribute("value", 1);
                 var br = document.createElement("br");
                 list.appendChild(button);
                 list.appendChild(quantidade);
-                //list.appendChild(preco);
+
                 list.appendChild(br);
-                //list.appendChild("<br>");
-                //para.appendChild(node);
-                //para.appendChild(br);
 
-
-                //element.appendChild(para);
                 button.addEventListener("click", function () {
+                    var dadosProd = getProduto(this.id);
                     //alert(ids[1]);
-                    var quant=document.getElementById("id"+this.id).value
-                    atualizaCarrinho(this.id, quant);
-                    carrinho.push([this.id, quant]);
+                    var quant = document.getElementById("id" + this.id).value
+                    carrinho.push([dadosProd[0]._id, dadosProd[0].name, quant, dadosProd[0].price]);
                     console.log(carrinho);
+                    atualizaCarrinho();
                     calculaTotal();
-                    //localStorage.setItem('idSupermercado',ids[1]);
-                    //verPrateleira();
+
+
                 });
 
             }
         }
 
-        function atualizaCarrinho( id, quantidade) {
-            var dados = getProduto(id);
-            var ids = [];
-         
-            var button = document.createElement("button");
-            button.innerHTML = quantidade+" x "+"R$ "+dados[0].price+" "+dados[0].name;
-           
+        function atualizaCarrinho() {
             var list = document.getElementById("carrinho");
-            var br = document.createElement("br");
-            list.appendChild(button);
-            list.appendChild(br);
-          
-            button.addEventListener("click", function () {
-                this.remove();
-                carrinho.pop(this.id)
+            list.innerHTML="";
+            for (prod in carrinho) {
+                var button = document.createElement("button");
+                button.innerHTML = carrinho[prod][2] + " x " + "R$ " + carrinho[prod][3] + " " + carrinho[prod][1];
+                button.id = carrinho[prod][0];
+
+                
+                var br = document.createElement("br");
+                list.appendChild(button);
+                list.appendChild(br);
+
+                button.addEventListener("click", function () {
+                    this.remove();
+                    //console.log(carrinho.indexOf(this.id))
+                    //carrinho.
+                    
+                    for (i in carrinho) {
+                        if (carrinho[i][0] == this.id) {
+                            //alert(this.id);
+                            console.log("remove")
+                            console.log(carrinho[i])
+                            console.log(i);
+                            carrinho.splice(i, 1);
+                            break;
+                        }
+                    }
+
+                    calculaTotal();
+
+                });
                 calculaTotal();
-            
-            });
-            calculaTotal();
+
+            }
 
         }
 
-        function calculaTotal(){
+        function calculaTotal() {
             var total = document.getElementById("total");
-            var sum=0;
+            var sum = 0;
             console.log("carrinho")
             console.log(carrinho)
-            for (i in  carrinho){
-                //console.log("produto");
+            for (i in carrinho) {
                 console.log(carrinho[i]);
-                var prod = getProduto(carrinho[i][0]);
-                console.log(prod[0])
-                sum = sum+(prod[0].price*carrinho[i][1]);
+                sum = sum + (carrinho[i][2] * carrinho[i][3]);
             }
             console.log("fim carrinho")
-            total.innerHTML = "Total a pagar: R$ "+sum;
+            total.innerHTML = "Total a pagar: R$ " + sum;
         }
 
-        function getProduto(id){
+        function getProduto(id) {
             const Http = new XMLHttpRequest();
             const url = 'http://localhost:3000/productt/' + id;
             Http.open("GET", url, false);
@@ -182,7 +189,7 @@
             console.log('aqui2');
             return obj;
         }
-        
+
 
         function getProdutos() {
             const Http = new XMLHttpRequest();
