@@ -56,3 +56,10 @@ div#carrinho {
     border: 3px solid white;
 }
 
+div#supermercados {
+    max-width:500px;
+    margin: auto;
+    border: 3px solid black;
+    background-color: white;
+}
+
